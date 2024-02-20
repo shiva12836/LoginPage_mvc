@@ -1,0 +1,96 @@
+﻿@model List<LoginPage_mvc.Controllers.LoginController.Lead>
+
+@{
+    ViewBag.Title = "MarketingExecutive";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // If you have a shared layout
+}
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {   
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+</style>
+
+<h2>Admin Dashboard</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Lead ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Program</th>
+                <th>Phone No</th>
+                <th>Email</th>
+                <th>Qualification</th>
+                <th>University</th>
+                <th>Website</th>
+                <th>Source</th>
+                <th>Type of Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lead in Model)
+            {
+                <tr>
+                    <td>@(lead.LeadId)</td>
+                    <td>@(lead.LName)</td>
+                    <td>@(lead.Address)</td>
+                    <td>@(lead.Program)</td>
+                    <td>@(lead.PhoneNo)</td>
+                    <td>@(lead.MailId)</td>
+                    <td>@(lead.Qualification)</td>
+                    <td>@(lead.University)</td>
+                    <td>@(lead.Website)</td>
+                    <td>@(lead.Source)</td>
+                    <td>@(lead.TypeofSource)</td>
+                    <!-- Add other table cells as needed -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No leads available.</p>
+}
+<style>
+    body {
+        -webkit-user-select: none; /* Disable selection */
+        -webkit-touch-callout: none; /* Disable long tap (for mobile) */
+    }
+
+    /* Optional: Prevent text selection */
+    ::-moz-selection {
+        background: transparent;
+        color: inherit;
+    }
+
+    ::selection {
+        background: transparent;
+        color: inherit;
+    }
+
+    /* Optional: Hide context menu on right-click */
+    body {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        /*khtml-user-select: none; *//* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    }
+</style>

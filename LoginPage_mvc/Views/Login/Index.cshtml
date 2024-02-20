@@ -1,0 +1,48 @@
+﻿@model LoginPage_mvc.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <table>
+        <tr>
+            <td>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EMAILID)
+                </div>
+            </td>
+            
+            <td>
+                <div class="form-group">
+                    <input type="email" name="EMAILID" placeholder="Enter user name" required>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+            </td>
+           
+            <td>
+                <div class="form-group">
+                    <input type="password" name="Password" placeholder="Enter password" required>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </td>
+        </tr>
+    </table>
+}
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })

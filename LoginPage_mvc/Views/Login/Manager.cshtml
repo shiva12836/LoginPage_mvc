@@ -1,0 +1,94 @@
+﻿@using System.Web.Mvc.Html
+@using System.Web.Mvc
+@using LoginPage_mvc.Controllers
+
+@model List<LoginPage_mvc.Controllers.LoginController.Lead>
+@{
+    ViewBag.Title = "Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manager Dashboard</h2>
+<h2>@ViewBag.message</h2>
+@using (Html.BeginForm("Manager", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <label for="file">Upload Excel file:</label>
+        <input type="file" name="file" id="file" />
+        <input type="submit" value="Upload" />
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 100);
+
+<div id="gridContainer">
+    @grid.GetHtml(
+       tableStyle: "table",
+       headerStyle: "table-header",
+       alternatingRowStyle: "alternate-row",
+       columns: grid.Columns(
+           grid.Column("LeadId", "Lead ID"),
+           grid.Column("LName", "Name"),
+           grid.Column("Address", "Address"),
+           grid.Column("Program", "Program"),
+           grid.Column("PhoneNo", "Phone No"),
+           grid.Column("MailId", "Email"),
+           grid.Column("Qualification", "Qualification"),
+           grid.Column("University", "University"),
+           grid.Column("Website", "Website"),
+           grid.Column("Source", "Source"),
+           grid.Column("TypeofSource", "Type of Source"),
+           grid.Column("AssignedExecutiveId", "AssignedExecutiveId"),
+           grid.Column("uploadedby", "UploadedBy"),
+           grid.Column(header: "Assign Lead to", format: @<text>
+            @{
+                             var selectList = ViewBag.MarketingExecutives as SelectList;
+                             var dropDownName = "MEName";
+            }
+            @using (Html.BeginForm("Manager", "Login", FormMethod.Post))
+                         {
+                @Html.DropDownList("MEName", ViewBag.MarketingExecutives as SelectList, "Select Executive", new { @class = "form-control" })
+                <input type="hidden" name="LeadId" value="@item.LeadId" />
+                <button type="button" onclick="assignLead(@item.LeadId)">Assign</button>
+                         }
+
+
+    </text>)
+
+)
+)
+</div>
+}
+else
+{
+    <p>No leads available.</p>
+}
+
+<style>
+    #gridContainer {
+        -webkit-user-select: none; /* Disable selection */
+        -webkit-touch-callout: none; /* Disable long tap (for mobile) */
+    }
+
+    /* Optional: Prevent text selection */
+    ::-moz-selection {
+        background: transparent;
+        color: inherit;
+    }
+
+    ::selection {
+        background: transparent;
+        color: inherit;
+    }
+
+    /* Optional: Hide context menu on right-click */
+    #gridContainer {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    }
+</style>
